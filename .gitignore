@@ -1,0 +1,5 @@
+__pycache__/
+my_venv/
+data/
+*.pth
+.DS_Store
