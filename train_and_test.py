@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torchvision import datasets, transforms
+import sys
+import os
 
 # 1. Setup Device
 device = torch.device("cuda")
@@ -57,3 +59,10 @@ print(f"\nSuccess! Final Accuracy: {100. * correct / len(test_loader.dataset)}%"
 # 6. Save the 'Brain' so we don't lose it again
 torch.save(model.state_dict(), "digits_model.pth")
 print("Model saved to 'digits_model.pth'")
+
+print("Synchronizing GPU...")
+if device.type == 'cuda':
+    torch.cuda.synchronize()
+
+print("Exiting...")
+os._exit(0)

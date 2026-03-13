@@ -1,5 +1,7 @@
 import torch
 from torchvision import datasets, transforms
+import sys
+import os
 
 # 1. Setup Device
 device = torch.device("cuda")
@@ -41,3 +43,10 @@ accuracy = 100. * correct / len(test_loader.dataset)
 print(f"\nResults:")
 print(f"Total Correct: {correct}/10,000")
 print(f"Accuracy: {accuracy}%")
+
+print("Synchronizing GPU...")
+if device.type == 'cuda':
+    torch.cuda.synchronize()
+
+print("Exiting...")
+os._exit(0)

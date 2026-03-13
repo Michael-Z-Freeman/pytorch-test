@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torchvision import datasets, transforms
+import sys
+import os
 
 # 1. Setup Device - The bundle maps AMD to 'cuda' for compatibility
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -38,8 +40,13 @@ for batch_idx, (data, target) in enumerate(train_loader):
     loss = criterion(output, target)
     loss.backward()
     optimizer.step()
-    
+
     if batch_idx % 100 == 0:
         print(f"Batch {batch_idx}/{len(train_loader)} - Loss: {loss.item():.4f}")
 
-print("Training Complete! Your AMD GPU successfully calculated gradients.")
+print("Training Complete! Synchronizing GPU...")
+if device.type == 'cuda':
+    torch.cuda.synchronize()
+
+print("Exiting...")
+os._exit(0)
